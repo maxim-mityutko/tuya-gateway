@@ -48,6 +48,10 @@ paths:
       "
       parameters:
         - $ref: '#/parameters/device_id'
+        - name: payload
+          in: body
+          schema:
+            $ref: '#/definitions/payload'
       responses:
         200:
           description: Post device commands
@@ -64,3 +68,9 @@ parameters:
     type: string
     required: true
     pattern: "^[a-zA-Z0-9-]+$"
+
+
+definitions:
+  payload:
+    description: Request body with commands for Tuya device
+    type: object
