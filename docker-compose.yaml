@@ -1,0 +1,13 @@
+version: '2'
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tuya-gateway:tag
+    environment:
+      - LOGGING_LEVEL=WARNING
+    env_file:
+      - secrets.env
+    ports:
+      - "65080:65080"
