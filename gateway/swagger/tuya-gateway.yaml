@@ -1,0 +1,66 @@
+swagger: '2.0'
+info:
+  title: Tuya Gateway
+  version: "0.1"
+  description: test
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /device/status:
+    get:
+      tags: [Devices]
+      operationId: nanotuya.api.get_device_status
+      summary: Get the latest device status
+      parameters:
+        - $ref: '#/parameters/device_id'
+      responses:
+        200:
+          description: Return device status
+          schema:
+            type: object
+            properties:
+              functions:
+                type: object
+  /device/functions:
+    get:
+      tags: [Devices]
+      operationId: nanotuya.api.get_device_functions
+      summary: Query the functions supported by the device
+      parameters:
+        - $ref: '#/parameters/device_id'
+      responses:
+        200:
+          description: Return device functions
+          schema:
+            type: object
+            properties:
+              functions:
+                type: object
+  /device/commands:
+    post:
+      tags: [Devices]
+      operationId: nanotuya.api.post_device_commands
+      summary: "
+        Send one or more instruction sets. Whether instruction sets can be
+        sent simultaneously depends on the product.
+      "
+      parameters:
+        - $ref: '#/parameters/device_id'
+      responses:
+        200:
+          description: Post device commands
+          schema:
+            type: object
+            properties:
+              functions:
+                type: object
+parameters:
+  device_id:
+    name: device_id
+    description: Tuya device unique identifier
+    in: query
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
