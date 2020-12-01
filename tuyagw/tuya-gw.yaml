@@ -1,0 +1,57 @@
+swagger: '2.0'
+info:
+  title: Tuya Gateway
+  version: "0.1"
+  description: test
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /devices:
+    get:
+      tags: [Devices]
+      operationId: device.set_device
+      summary: Get all devices
+      responses:
+        200:
+          description: Return devices
+          schema:
+            type: object
+            properties:
+              pets:
+                type: array
+                items:
+                  $ref: '#/definitions/Device'
+definitions:
+  Device:
+    type: object
+    required:
+      - name
+      - animal_type
+    properties:
+      id:
+        type: string
+        description: Unique identifier
+        example: "123"
+        readOnly: true
+      name:
+        type: string
+        description: Pet's name
+        example: "Susie"
+        minLength: 1
+        maxLength: 100
+      animal_type:
+        type: string
+        description: Kind of animal
+        example: "cat"
+        minLength: 1
+      tags:
+        type: object
+        description: Custom tags
+      created:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2015-07-07T15:49:51.230+02:00"
+        readOnly: true
