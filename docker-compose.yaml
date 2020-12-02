@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: tuya-gateway:tag
     environment:
-      - LOGGING_LEVEL=INFO
+      - LOGGING_LEVEL=DEBUG
     env_file:
       - secrets.env
     ports:

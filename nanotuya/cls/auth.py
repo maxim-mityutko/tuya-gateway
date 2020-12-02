@@ -4,6 +4,7 @@ import hmac
 import hashlib
 import requests
 import logging
+from os import environ as env
 
 
 class TuyaAuth:
@@ -52,9 +53,10 @@ class TuyaAuth:
 
         self.headers = None
 
-        self._logger = logging.getLogger()
         self._auth_file = "/tmp/tuya-gateway.json"
         self._uri = f"https://openapi.tuya{self.region}.com/v1.0"
+
+        self._logger = self._get_logger()
 
         # Restore last authorisation details
         self._parse_auth_response(auth_response=self._load_auth())
@@ -73,6 +75,18 @@ class TuyaAuth:
     @staticmethod
     def _now():
         return str(int(time.time() * 1000))
+
+    @staticmethod
+    def _get_logger():
+        if 'LOGGING_LEVEL' in env:
+            level = logging.getLevelName(env['LOGGING_LEVEL'])
+        else:
+            level = logging.INFO
+
+        logging.basicConfig(
+            level=level, format='%(levelname)-7s %(name)-22s %(message)s', style='%'
+        )
+        return logging.getLogger(__name__)
 
     def _save_auth(self, auth_response: dict):
         self._logger.info(f"Saving authentication details to '{self._auth_file}'...")
@@ -127,6 +141,7 @@ class TuyaAuth:
         if self.token:
             headers["access_token"] = self.token
 
+        self._logger.debug(f"Headers: {headers}")
         self.headers = headers
 
     def _authenticate(self, is_refresh: bool = False):
@@ -140,6 +155,8 @@ class TuyaAuth:
         self._set_headers()
 
         response = requests.get(url, headers=self.headers)
+        self._logger.debug(f"Auth response: {response} {response.content.decode()}")
+
         if response.status_code == 200:
             response_dict = json.loads(response.content.decode())
             self._parse_auth_response(auth_response=response_dict)
