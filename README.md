@@ -9,7 +9,8 @@ docker ps
 
 docker exec -it tuya-gateway_gateway_1 /bin/sh
 TUYA_TOKEN=<<token>>
-export TUYA_TOKENecho $TUYA_TOKEN
+export TUYA_TOKEN
+echo $TUYA_TOKEN
 
 ```
 
