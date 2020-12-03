@@ -1,4 +1,4 @@
-# Tuya Gateway
+# Tuya (Smart Life) Gateway
 ## Why? 
 
 Recently I bought a bunch of *Flic* buttons to interact with my smart home devices. Unfortunately they lack *Smart Life*
