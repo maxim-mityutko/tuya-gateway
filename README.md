@@ -15,10 +15,28 @@ My goal was to make it as lightweight as possible, hence the following functiona
 * get device functions
 * send commands to the device in the HTML body (this means that those should be correctly formatted JSON, more below)
 
-## Tuya Setup
-**WIP**
+## Setup
+1. Register at https://iot.tuya.com/
+2. Go to *Cloud* -- *Project* -- *Create*
+3. Set your "Project Name", "Description" and appropriate "Industry"
+4. Go to *Cloud* -- *API Group* and apply the following groups:
+    * Authorization Management
+    * Device Control
+    * Device Management
+5. Go to *Cloud* -- *Linked Device* -- *Linked Devices by App Account* -- *Add App Account*
+6. Scan the QR code with you *Smart Life* app (*Me* -- *upper right corner*) and confirm link
+7. The `device_id` that is used in the API can be found on *Device List* tab (make sure to select correct region) or
+in device details in *Smart Life* app
+8. Go to newly created project page, where "Client ID" and "Client Secret" are available. Add environment variables on 
+your machine (for development purposes) or add them to `secrets.env` file (they will be applied to the docker image 
+during build).
+
+* TUYA_REGION = us / eu / cn / in
+* TUYA_CLIENT_ID
+* TUYA_CLIENT_SECRET
 
 ## API
+The following methods are available through the gateway:
 * Status    (GET):  http://host:65080/device/status?device_id=xxxxxxx
 * Functions (GET):  http://host:65080/device/functions?device_id=xxxxxxx
 * Commands  (POST): http://host:65080/device/commands?device_id=xxxxxxx
@@ -31,9 +49,7 @@ My goal was to make it as lightweight as possible, hence the following functiona
     ```
 
 ## Deployment
-The best approach is to spin up a docker container with `docker-compose`.
-
-NOTE: Update secrets.env before building the containers, 'access key' and 'key secret' are available as the
+The best approach is to spin up a docker container with `docker-compose`. *NOTE: Update secrets.env before build.*
 
 ### Balena Cloud
 Currently gateway is running in Docker environment on Raspberry Pi v4 running BalenaOS. Their service handles deployment 
@@ -53,6 +69,7 @@ docker-compose up
 docker image ls
 docker ps
 
+# Connect to shell in the container
 docker exec -it tuya-gateway_gateway_1 /bin/sh
 ```
 
