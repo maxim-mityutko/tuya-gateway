@@ -69,7 +69,7 @@ In order to figure out what commands are supported by the device, call `function
 In order to send command to the device, send the POST request to `commands` endpoint with the following:
 * Headers: `Content-Type: application/json`
 * Body: 
-    * To turn device off:
+    * Turn device off:
         ```json
         
         {
@@ -78,7 +78,7 @@ In order to send command to the device, send the POST request to `commands` endp
             ]
         }
         ```
-    * To change device's brightness:
+    * Change device's brightness:
         ```json
         {
             "commands": [
