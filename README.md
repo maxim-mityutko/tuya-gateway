@@ -40,13 +40,52 @@ The following methods are available through the gateway:
 * Status    (GET):  http://host:65080/device/status?device_id=xxxxxxx
 * Functions (GET):  http://host:65080/device/functions?device_id=xxxxxxx
 * Commands  (POST): http://host:65080/device/commands?device_id=xxxxxxx
-    ```json
-    {
-        "commands": [
-            {"code": "bright_value", "value": 125}
-        ]
-    }
-    ```
+
+In order to figure out what commands are supported by the device, call `functions` endpoint with the desired
+`device_id`. The response will look like this:
+```json
+{
+  "result": {
+    "category": "dj",
+    "functions": [
+      {
+        "code": "switch_led",
+        "desc": "[\u706f\u5177]\u5f00\u5173",
+        "name": "\u5f00\u5173",
+        "type": "Boolean",
+        "values": "{}"
+      },
+      {
+        "code": "bright_value",
+        "desc": "[\u706f\u5177]\u4eae\u5ea6",
+        "name": "\u4eae\u5ea6",
+        "type": "Integer",
+        "values": "{\"min\":25,\"scale\":0,\"unit\":\"\",\"max\":255,\"step\":1}"
+      }
+    ]
+  }
+}
+```
+In order to send command to the device, send the POST request to `commands` endpoint with the following:
+* Headers: `Content-Type: application/json`
+* Body: 
+    * To turn device off:
+        ```json
+        
+        {
+            "commands": [
+                {"code": "switch_led", "value": false}
+            ]
+        }
+        ```
+    * To change device's brightness:
+        ```json
+        {
+            "commands": [
+                {"code": "bright_value", "value": 125}
+            ]
+        }
+        ```
 
 ## Deployment
 The best approach is to spin up a docker container with `docker-compose`. *NOTE: Update secrets.env before build.*
