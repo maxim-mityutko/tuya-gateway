@@ -31,9 +31,9 @@ in device details in *Smart Life* app
 your machine (for development purposes) or add them to `secrets.env` file (they will be applied to the docker image 
 during build).
 
-* TUYA_REGION = us / eu / cn / in
-* TUYA_CLIENT_ID
-* TUYA_CLIENT_SECRET
+    * TUYA_REGION = us / eu / cn / in
+    * TUYA_CLIENT_ID
+    * TUYA_CLIENT_SECRET
 
 ## API
 The following methods are available through the gateway:
