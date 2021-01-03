@@ -1,6 +1,8 @@
 version: '2'
 services:
   tuya-gateway:
+    restart: unless-stopped
+    container_name: tuya-gateway
     build:
       context: .
       dockerfile: Dockerfile
