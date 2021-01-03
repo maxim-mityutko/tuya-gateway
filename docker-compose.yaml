@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: tuya-gateway:tag
+    image: tuya-gateway
     environment:
       - LOGGING_LEVEL=DEBUG
     env_file:
