@@ -31,15 +31,16 @@ in device details in *Smart Life* app
 your machine (for development purposes) or add them to `secrets.env` file (they will be applied to the docker image 
 during build).
 
+    * LOGGING_LEVEL = WARNING
     * TUYA_REGION = us / eu / cn / in
     * TUYA_CLIENT_ID
     * TUYA_CLIENT_SECRET
 
 ## API
 The following methods are available through the gateway:
-* Status    (GET):  http://host:65080/device/status?device_id=xxxxxxx
-* Functions (GET):  http://host:65080/device/functions?device_id=xxxxxxx
-* Commands  (POST): http://host:65080/device/commands?device_id=xxxxxxx
+* Status    (GET):  http://host:65080/api/v1/device/status?device_id=xxxxxxx
+* Functions (GET):  http://host:65080/api/v1/device/functions?device_id=xxxxxxx
+* Commands  (POST): http://host:65080/api/v1/device/commands?device_id=xxxxxxx
 
 In order to figure out what commands are supported by the device, call `functions` endpoint with the desired
 `device_id`. The response will look like this:
