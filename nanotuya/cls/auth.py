@@ -61,16 +61,19 @@ class TuyaAuth:
         # Restore last authorisation details
         self._parse_auth_response(auth_response=self._load_auth())
 
-        if not self.token:
-            self._logger.warning("No token, starting authentication...")
-            self._authenticate()
-        elif self.auth_time + self.token_expire * 1000 <= int(self._now()):
-            self._logger.warning("Token expired, refreshing...")
-            self._authenticate(is_refresh=True)
-        elif self.token:  # If token is known, update 'headers'
-            self._logger.info("Valid token found. Updating headers...")
+        if not self.region or not self.client_id or not self.client_secret:
+            self._logger.error("Environment variables not set!")
+        else:
+            if not self.token:
+                self._logger.warning("No token, starting authentication...")
+                self._authenticate()
+            elif self.auth_time + self.token_expire * 1000 <= int(self._now()):
+                self._logger.warning("Token expired, refreshing...")
+                self._authenticate(is_refresh=True)
+            elif self.token:  # If token is known, update 'headers'
+                self._logger.info("Valid token found. Updating headers...")
 
-        self._set_headers()
+            self._set_headers()
 
     @staticmethod
     def _now():
@@ -78,13 +81,13 @@ class TuyaAuth:
 
     @staticmethod
     def _get_logger():
-        if 'LOGGING_LEVEL' in env:
-            level = logging.getLevelName(env['LOGGING_LEVEL'])
+        if "LOGGING_LEVEL" in env:
+            level = logging.getLevelName(env["LOGGING_LEVEL"])
         else:
             level = logging.INFO
 
         logging.basicConfig(
-            level=level, format='%(levelname)-7s %(name)-22s %(message)s', style='%'
+            level=level, format="%(levelname)-7s %(name)-22s %(message)s", style="%"
         )
         return logging.getLogger(__name__)
 

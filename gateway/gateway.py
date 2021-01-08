@@ -1,5 +1,5 @@
 import connexion
 
-app = connexion.App(__name__)
-app.add_api("swagger/tuya-gateway.yaml")
+app = connexion.AioHttpApp(__name__)
+app.add_api("swagger/tuya-gateway.yaml", base_path="/api/v1")
 app.run(port=65080)

@@ -1,10 +1,17 @@
 import json
 import requests
+import logging
 from os import environ as env
 
 from nanotuya.cls import auth
 
 URL = "https://openapi.tuya{region}.com/v1.0/devices/{device_id}/{endpoint}"
+
+
+def _logger(response: requests.Response):
+    logger = logging.getLogger(__name__)
+    logger.debug(f"Response status code: ({response.status_code})")
+    logger.debug(f"Response content: {response.content.decode()}")
 
 
 def _api_request_headers() -> dict:
@@ -27,7 +34,7 @@ def _url_format(device_id: str, endpoint: str) -> str:
     return url
 
 
-def get_device_functions(device_id: str) -> dict:
+async def get_device_functions(device_id: str) -> dict:
     """
     Get the list of available device functions based on its ID.
     :param device_id: Unique id of the Tuya device
@@ -37,10 +44,11 @@ def get_device_functions(device_id: str) -> dict:
         url=_url_format(device_id=device_id, endpoint="functions"),
         headers=_api_request_headers(),
     )
+    _logger(response=response)
     return json.loads(response.content.decode())
 
 
-def get_device_status(device_id: str):
+async def get_device_status(device_id: str):
     """
     Get status of the device based on its ID.
     :param device_id: Unique id of the Tuya device
@@ -50,11 +58,11 @@ def get_device_status(device_id: str):
         url=_url_format(device_id=device_id, endpoint="status"),
         headers=_api_request_headers(),
     )
-
+    _logger(response=response)
     return json.loads(response.content.decode())
 
 
-def post_device_commands(device_id: str, payload: dict) -> dict:
+async def post_device_commands(device_id: str, payload: dict) -> dict:
     # fmt: off
     """
     Send dictionary of commands to specific device in the request body.
@@ -74,5 +82,5 @@ def post_device_commands(device_id: str, payload: dict) -> dict:
         headers=_api_request_headers(),
         data=json.dumps(payload),
     )
-
+    _logger(response=response)
     return json.loads(response.content.decode())

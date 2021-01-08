@@ -1,2 +1,4 @@
 requests >= 2.22.0
 connexion == 2.7.0
+aiohttp == 3.7.3
+aiohttp_jinja2 == 1.4.2
