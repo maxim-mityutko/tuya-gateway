@@ -14,3 +14,5 @@ jobs:
         with:
           labels: 'tuya,gateway,api'
           platforms: linux/amd64
+          push: true
+          tags: beerhead/tuyagateway:latest
