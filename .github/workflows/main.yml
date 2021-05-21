@@ -21,5 +21,5 @@ jobs:
         with:
           tags: beerhead/tuya-gateway:latest
           push: true
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64
 
