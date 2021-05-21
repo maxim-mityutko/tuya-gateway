@@ -1,4 +1,4 @@
-name: cicd
+name: Docker
 on:
   pull_request:
     branches:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Build and push Docker images
@@ -15,4 +15,4 @@ jobs:
           labels: 'tuya,gateway,api'
           platforms: linux/amd64
           push: true
-          tags: beerhead/tuyagateway:latest
+          tags: beerhead/tuya-gateway:latest
