@@ -117,10 +117,11 @@ class TuyaAuth:
             self.refresh_token = result_dict.get("refresh_token")
 
     def _set_headers(self):
+        t = self._now()
         if not self.token:
-            payload = f"{self.client_id}{self._now()}"
+            payload = f"{self.client_id}{t}"
         else:
-            payload = f"{self.client_id}{self.token}{self._now()}"
+            payload = f"{self.client_id}{self.token}{t}"
 
         # Sign Payload
         signature = (
@@ -137,7 +138,7 @@ class TuyaAuth:
         headers = {
             "client_id": self.client_id,
             "sign_method": "HMAC-SHA256",
-            "t": self._now(),
+            "t": t,
             "sign": signature,
         }
 
