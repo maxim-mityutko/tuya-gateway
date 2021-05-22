@@ -4,9 +4,6 @@ on:
     tags:
       - 'v*.*.*'
       - 'latest'
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -35,6 +32,5 @@ jobs:
         with:
           tags: ${{ steps.meta.outputs.tags }}
           push: true
-          platforms: linux/amd64
-          #, linux/arm64, linux/arm/v7
+          platforms: linux/amd64, linux/arm64, linux/arm/v7
 
