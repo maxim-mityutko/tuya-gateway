@@ -89,28 +89,22 @@ In order to send command to the device, send the POST request to `commands` endp
         ```
 
 ## Deployment
-The best approach is to spin up a docker container with `docker-compose`. *NOTE: Update secrets.env before build.*
-
-### Balena Cloud
-Currently gateway is running in Docker environment on Raspberry Pi v4 running BalenaOS. Their service handles deployment 
-and the build in the cloud and the code is pushed via the Balena CLI, for more information go to:
-[Balena CLI](https://github.com/balena-io/balena-cli/blob/master/INSTALL.md)
-
-```bash
-balena push <aplication_name>
-```  
-
-### Docker
-
-```bash
-docker-compose build
-docker-compose up
-
-docker image ls
-docker ps
-
-# Connect to shell in the container
-docker exec -it tuya-gateway_gateway_1 /bin/sh
+*NOTE: Update secrets.env before build.*
+* Clone repo and use provided `docker-compose`
+* Build custom image using prebuilt container from Docker Hub:
+```yaml
+version: '3'
+services:
+  tuya-gateway:
+    image: beerhead/tuya-gateway:latest
+    restart: always
+    container_name: tuya-gateway
+    environment:
+      - LOGGING_LEVEL=WARNING
+    env_file:
+      - secrets.env
+    ports:
+      - '65080:65080'
 ```
 
 ## License
