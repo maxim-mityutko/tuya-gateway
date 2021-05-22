@@ -22,8 +22,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: name/app
-      - name: Inspect
+          images: beerhead/tuya-gateway
+      - name: Inspect Meta
         run: echo "${{ steps.meta.outputs.tags }}"
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -33,7 +33,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.4.0
         with:
-          tags: beerhead/tuya-gateway:${{ github.ref }}
+          tags: ${{ steps.meta.outputs.tags }}
           push: true
           platforms: linux/amd64
           #, linux/arm64, linux/arm/v7
