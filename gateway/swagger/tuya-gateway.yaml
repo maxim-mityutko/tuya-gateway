@@ -45,10 +45,6 @@ paths:
       parameters:
         - $ref: '#/parameters/home_id'
         - $ref: '#/parameters/scene_id'
-        - name: payload
-          in: body
-          schema:
-            $ref: '#/definitions/payload'
       responses:
         200:
           description: Trigger scene
@@ -124,7 +120,7 @@ paths:
             properties:
               functions:
                 type: object
-  /ir/keys:
+  /ir/remote/keys:
     get:
       tags: [ IR ]
       operationId: nanotuya.api.get_ir_remote_keys

@@ -93,7 +93,7 @@ In order to send command to the device, send the POST request to `commands` endp
 ### IR Devices
 The following methods are available through the gateway:
 * IR Remotes (GET): http://host:65080/api/v1/ir/remotes?device_id=xxxxxxx
-* IR Remote Keys (GET/POST): http://host:65080/api/v1/ir/keys?device_id=xxxxxxx&remote_id=yyyyyyy
+* IR Remote Keys (GET/POST): http://host:65080/api/v1/ir/remote/keys?device_id=xxxxxxx&remote_id=yyyyyyy
 
 Call `/ir/remotes` endpoint to list IR remotes bound to the IR device, that will include native remotes available
 for different brands and DIY remotes.
