@@ -5,10 +5,12 @@ from os import environ as env
 
 from nanotuya.cls import auth
 
-DEVICE_URL = "https://openapi.tuya{region}.com/v1.0/devices/{id}/{endpoint}"    # id = device_id
-IR_URL = "https://openapi.tuya{region}.com/v1.0/infrareds/{id}/{endpoint}"      # id = infrared_id
-USER_URL = "https://openapi.tuya{region}.com/v1.0/users/{id}/{endpoint}"        # id = uid (user_id)
-HOME_URL = "https://openapi.tuya{region}.com/v1.0/homes/{id}/{endpoint}"        # id = home_id
+# fmt: off
+DEVICE_URL = "https://openapi.tuya{region}.com/v1.0/devices/{id}/{endpoint}"  # id = device_id
+IR_URL = "https://openapi.tuya{region}.com/v1.0/infrareds/{id}/{endpoint}"  # id = infrared_id
+USER_URL = "https://openapi.tuya{region}.com/v1.0/users/{id}/{endpoint}"  # id = uid (user_id)
+HOME_URL = "https://openapi.tuya{region}.com/v1.0/homes/{id}/{endpoint}"  # id = home_id
+# fmt: on
 
 
 def _logger(response: requests.Response):
@@ -46,10 +48,7 @@ def _request(url: str, payload: dict = None, method: str = None):
             data=json.dumps(payload),
         )
     elif not payload:
-        response = requests.get(
-            url=url,
-            headers=_api_request_headers()
-        )
+        response = requests.get(url=url, headers=_api_request_headers())
 
     _logger(response=response)
     return json.loads(response.content.decode())
@@ -117,7 +116,7 @@ async def get_ir_remote_keys(device_id: str, remote_id: str) -> dict:
     :return: Dictionary with HTTP response
     """
     keys = {}
-    url = _url_format(id=device_id, endpoint='remotes', url=IR_URL)
+    url = _url_format(id=device_id, endpoint="remotes", url=IR_URL)
 
     # Native keys and learned keys have different endpoints, call both and put the results in one dictionary.
     # If remote does not have any native keys, the response is "code:2010, msg:device not exist".
@@ -156,7 +155,8 @@ async def post_ir_remote_key(device_id: str, remote_id: str, payload: dict) -> d
     :param payload: Request body in JSON format
     :return: Dictionary with HTTP response
     """
-    url = _url_format(id=device_id, endpoint='remotes', url=IR_URL)
+    # fmt: on
+    url = _url_format(id=device_id, endpoint="remotes", url=IR_URL)
 
     # {"code" : <value>} for "custom", {"key": <value>} for "native"
     if payload.get("type", "native") == "custom":
@@ -175,7 +175,7 @@ async def get_homes(user_id: str) -> dict:
     :param user_id: ID of the user (can be obtained from Tuya IoT portal).
     :return: Dictionary with with HTTP response.
     """
-    url = _url_format(id=user_id, endpoint='homes', url=USER_URL)
+    url = _url_format(id=user_id, endpoint="homes", url=USER_URL)
     response = _request(url=url)
     return response
 
@@ -186,7 +186,7 @@ async def get_scenes(home_id: str) -> dict:
     :param home_id: ID of the home (user who is used to "Link Devices by App Account" should be a "Home Owner")
     :return: Dictionary with with HTTP response.
     """
-    url = _url_format(id=home_id, endpoint='scenes', url=HOME_URL)
+    url = _url_format(id=home_id, endpoint="scenes", url=HOME_URL)
     response = _request(url=url)
     return response
 
@@ -198,6 +198,6 @@ async def post_trigger_scene(home_id: str, scene_id: str) -> dict:
     :param scene_id: Scene ID within Tuya App.
     :return: Dictionary with with HTTP response.
     """
-    url = _url_format(id=home_id, endpoint='scenes', url=HOME_URL)
+    url = _url_format(id=home_id, endpoint="scenes", url=HOME_URL)
     response = _request(url=f"{url}/{scene_id}/trigger", method="post")
     return response
