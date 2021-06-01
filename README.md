@@ -23,6 +23,7 @@ My goal was to make it as lightweight as possible, hence the following functiona
     * Authorization Management
     * Device Control
     * Device Management
+    * IR Control Hub Open Service
 5. Go to *Cloud* -- *Linked Device* -- *Linked Devices by App Account* -- *Add App Account*
 6. Scan the QR code with you *Smart Life* app (*Me* -- *upper right corner*) and confirm link
 7. The `device_id` that is used in the API can be found on *Device List* tab (make sure to select correct region) or
@@ -37,6 +38,7 @@ during build).
     * TUYA_CLIENT_SECRET
 
 ## API
+### Generic Devices
 The following methods are available through the gateway:
 * Status    (GET):  http://host:65080/api/v1/device/status?device_id=xxxxxxx
 * Functions (GET):  http://host:65080/api/v1/device/functions?device_id=xxxxxxx
@@ -85,6 +87,32 @@ In order to send command to the device, send the POST request to `commands` endp
             "commands": [
                 {"code": "bright_value", "value": 125}
             ]
+        }
+        ```
+
+### IR Devices
+The following methods are available through the gateway:
+* IR Remotes (GET): http://host:65080/api/v1/ir/remotes?device_id=xxxxxxx
+* IR Remote Keys (GET/POST): http://host:65080/api/v1/ir/keys?device_id=xxxxxxx&remote_id=yyyyyyy
+
+Call `/ir/remotes` endpoint to list IR remotes bound to the IR device, that will include native remotes available
+for different brands and DIY remotes.
+Call `/ir/keys` to get the list of native and custom keys bound to the remote. In order to trigger the IR call the 
+same endpoint with POST method:
+* Headers: `Content-Type: application/json`
+* Body:
+    * Native:
+        ```json
+        {
+            "type": "native",
+            "key": "<value>"
+        }
+        ```
+    * Custom:
+        ```json
+        {
+            "type": "custom",
+            "code": "<value>"
         }
         ```
 
