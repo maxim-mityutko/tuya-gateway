@@ -115,6 +115,15 @@ same endpoint with POST method:
             "code": "<value>"
         }
         ```
+    
+### Scenes
+The following methods are available through the gateway:
+* Homes (GET): http://host:65080/api/v1/homes?user_id=xxxxxxx
+* Scenes (GET): http://host:65080/api/v1/home/scenes?home_id=xxxxxxx
+* Trigger Scene (POST): http://host:65080/api/v1/home/scenes?home_id=xxxxxxx&scene_id=yyyyyyy
+
+Use `/homes` endpoint to get the list of homes linked to the user. In order to be able to get the list of scenes
+and trigger them, user, that is used in "Link Devices by App Account" should be a "Homeowner"
 
 ## Deployment
 *NOTE: Update secrets.env before build.*
