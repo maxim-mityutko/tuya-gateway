@@ -25,7 +25,7 @@ paths:
                 type: object
   /home/scenes:
     get:
-      tags: [ Home ]
+      tags: [ Scene ]
       operationId: nanotuya.api.get_scenes
       summary: Get scenes available in home
       parameters:
@@ -39,7 +39,7 @@ paths:
               functions:
                 type: object
     post:
-      tags: [ IR ]
+      tags: [ Scene ]
       operationId: nanotuya.api.post_trigger_scene
       summary: Trigger scene
       parameters:
