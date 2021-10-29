@@ -13,7 +13,7 @@ My goal was to make it as lightweight as possible, hence the following functiona
 * authenticate with Tuya IoT via OAuth2
 * get device status
 * get device functions
-* send commands to the device in the HTML body (this means that those should be correctly formatted JSON, more below)
+* send commands to the device in the request body (this means that those should be correctly formatted JSON, more below)
 
 ## Setup
 1. Register at https://iot.tuya.com/
